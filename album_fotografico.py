@@ -83,7 +83,7 @@ def main():
 
         if scelta == "1":
             while True:
-                file_path = input("Inserisci il path del file da caricare: ").strip()
+                file_path = input("Inserisci di seguito il path del file da caricare: ").strip()
                 album = carica_da_file(file_path)
                 if album is not None:
                     break
