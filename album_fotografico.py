@@ -4,8 +4,8 @@ def carica_da_file(file_path):
     try:
         album={} #raggruppo le foto
         with open(file_path, "r", encoding="utf-8") as csvfile:
-            csvfile.readlines()
-            for riga in file_path:
+            next(csvfile)
+            for riga in csvfile:
                 valori=riga.strip().split(",")
                 anno=int (valori[4])
                 diz={
@@ -23,7 +23,7 @@ def carica_da_file(file_path):
         return None
 
 def aggiungi_foto(album, codice, titolo, autore, mese, anno, file_path):
-       if not mese<1 or mese>12:
+       if mese<1 or mese>12:
            return None #il codice dice che il mese non è valido
        for anno, lista_foto in album.items():
            for diz in lista_foto:
@@ -49,12 +49,12 @@ def aggiungi_foto(album, codice, titolo, autore, mese, anno, file_path):
 
 
 
-def cerca_foto(album, codice, titolo, autore, mese, anno):
+def cerca_foto(album, codice):
     """Cerca una foto nell'album dato il codice"""
     for anno in album:
         for diz in album[anno]:
             if diz["codice"] == codice:
-                return f"{codice},{titolo},{autore},{mese},{anno}"
+                return f"{codice["codice"]},{diz["titolo"]},{diz["autore"]},{diz ["mese"]},{diz["anno"]}"
     return None
 
 def elenco_foto_anno_per_titolo(album, anno):
@@ -116,7 +116,7 @@ def main():
                 continue
 
             codice = input("Inserisci il codice della foto da cercare: ").strip()
-            risultato = cerca_foto(album, codice, titolo, autore, mese, anno)
+            risultato = cerca_foto(album, codice)
             if risultato:
                 print(f"Foto trovata: {risultato}")
             else:
