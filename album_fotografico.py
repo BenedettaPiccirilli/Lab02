@@ -1,4 +1,3 @@
-
 def carica_da_file(file_path):
     """Carica le foto dal file, creando un nuovo anno ogni volta che compare per la prima volta"""
     try:
@@ -6,13 +5,13 @@ def carica_da_file(file_path):
         with open(file_path, "r", encoding="utf-8") as csvfile:
             next(csvfile)
             for riga in csvfile:
-                valori=riga.strip().split(",")
+                valori=riga.split(",")
                 anno=int (valori[4])
                 diz={
-                    "codice" : valori[0],
-                    "titolo" : valori [1] ,
-                    "autore" : valori[2],
-                    "mese": valori [3],
+                    "codice" : valori[0].strip(),
+                    "titolo" : valori [1].strip() ,
+                    "autore" : valori[2].strip(),
+                    "mese": valori [3].strip(),
                     "anno" : anno
                 }
                 if anno not in album:
@@ -42,7 +41,7 @@ def aggiungi_foto(album, codice, titolo, autore, mese, anno, file_path):
 
        try:
            with open(file_path, "a", encoding="utf-8") as csvfile:
-               csvfile.writelines(f"{codice} , {titolo} , {autore} , {mese} , {anno} \n")
+               csvfile.writelines(f"{codice} ,{titolo} ,{autore} , {mese} , {anno} \n")
        except Exception:
            return None
        return nuovodiz
@@ -54,7 +53,7 @@ def cerca_foto(album, codice):
     for anno in album:
         for diz in album[anno]:
             if diz["codice"] == codice:
-                return f"{codice["codice"]},{diz["titolo"]},{diz["autore"]},{diz ["mese"]},{diz["anno"]}"
+                return f"{diz['codice']},{diz['titolo']},{diz['autore']},{diz ['mese']},{diz['anno']}"
     return None
 
 def elenco_foto_anno_per_titolo(album, anno):
